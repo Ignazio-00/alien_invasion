@@ -16,8 +16,8 @@ class AlienInvasion:
 
         self.settings = Settings()
 
-        # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-        self.screen = pygame.display.set_mode([self.settings.screen_width, self.settings.screen_height])
+        self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+        #self.screen = pygame.display.set_mode([self.settings.screen_width, self.settings.screen_height])
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
@@ -35,7 +35,7 @@ class AlienInvasion:
             self.ship.update()
             self.bullets.update()
             self._update_aliens()
-            self._remove_bullets()
+            self._update_bullets()
             self._update_screen()
 
     def _check_events(self):
@@ -117,16 +117,29 @@ class AlienInvasion:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
-    def _remove_bullets(self):
-        """Remove bullets when they reach top of the screen."""
+    def _update_bullets(self):
+        """Remove bullets when they reach top of the screen of when collision between bullet and alien happens."""
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+        self._check_bullet_alien_collisions()
+
+    def _check_bullet_alien_collisions(self):
+        """Respond to bullet-alien collisions."""
+        # Remove any bullets and aliens that have collided.
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        if not self.aliens:
+            self.bullets.empty()
+            self._create_fleet()
 
     def _update_aliens(self):
         """Check if the fleet is at and edge, then update the positions of all aliens in the fleet."""
         self._check_fleet_edges()
         self.aliens.update()
+
+        # Looks for alien-ship collisions.
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            print("Ship collided!")
 
     def _check_fleet_edges(self):
         """Respond appropriately if any aliens have reached an edge."""
