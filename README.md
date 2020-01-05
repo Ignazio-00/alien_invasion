@@ -20,4 +20,4 @@ loses a ship. If the player loses three ships, the game ends.
 
 ## Playing game
 - Run `alien_invasion.py` file from **alien_invasion** directory
-(e.g. `python3 alien_invasion.py`)
+(i.e. `python3 alien_invasion.py`)
