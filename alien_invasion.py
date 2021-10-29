@@ -32,13 +32,13 @@ class AlienInvasion:
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
 
-        self.ship = Ship(self)
+        self.ship = Ship(self, True)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
 
         self._create_fleet()
 
-        # Make the Play button.
+        # Make the Play button. IB
         self.play_button = Button(self, "Play")
 
     def run_game(self):
@@ -171,10 +171,17 @@ class AlienInvasion:
     def _check_bullet_alien_collisions(self):
         """Respond to bullet-alien collisions."""
         # Remove any bullets and aliens that have collided.
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, False)
+
 
         if collisions:
             for aliens in collisions.values():
+                for alien in aliens:
+                    alien.alien_health -=1
+                    if alien.alien_health == 0:
+                        self.aliens.remove(alien)
+                    else:
+                        alien.update_image()
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
             self.sb.check_high_score()

@@ -1,19 +1,29 @@
 import pygame
 from pygame.sprite import Sprite
+from random import randint
 
 
 class Alien(Sprite):
     """A class to represent a single alien in the fleet."""
-
+    
     def __init__(self, ai_game):
         """Initialize the alien and set its starting position."""
         super(Alien, self).__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
+        
+        
+        # Define Alien types IB
+        self.alien_health = 1
+        randint_random = randint(0, 100)
+        if randint_random <= 20:
+            self.alien_health = 3
+        elif randint_random >= 21 and randint_random <= 50:
+            self.alien_health = 2
 
-        # Load the alien image and set its rect attribute.
-        self.image = pygame.image.load('images/alien.bmp')
+        self.update_image()
         self.rect = self.image.get_rect()
+        # Load the alien image and set its rect attribute IB
 
         # Start each new alien near the top left of the screen
         self.rect.x = self.rect.width
@@ -21,6 +31,19 @@ class Alien(Sprite):
 
         # Store the alien's exact horizontal position.
         self.x = float(self.rect.x)
+
+
+        # Update image dependend on health IB
+    
+    def update_image(self):
+        '''Update image dependend on health'''
+        if self.alien_health == 1:
+            self.image = pygame.image.load("images/assets/pixel_ship_green_small.png")
+        elif self.alien_health == 2:
+            self.image = pygame.image.load("images/assets/pixel_ship_blue_small.png")
+        elif self.alien_health == 3:
+            self.image = pygame.image.load("images/assets/pixel_ship_red_small.png")
+
 
     def update(self):
         """Move alien right or left."""

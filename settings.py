@@ -6,17 +6,17 @@ class Settings:
         # Screen settings
         self.screen_width = 1200
         self.screen_height = 800
-        self.bg_color = (230, 230, 230)
+        self.bg_color = (0, 0, 0)
 
-        # Ship settings
-        self.ship_limit = 3
+        # Ship settings self lifes
+        self.ship_limit = 1
 
         # Bullet settings
-        self.bullet_speed = 10.5
-        self.bullet_width = 3
-        self.bullet_height = 15
-        self.bullet_color = (60, 60, 60)
-        self.bullets_allowed = 3
+        self.bullet_speed = 12.5
+        self.bullet_width = 5
+        self.bullet_height = 10
+        self.bullet_color = (255, 0, 0)
+        self.bullets_allowed = 10
 
         # Alien settings
         self.fleet_drop_speed = 10
@@ -31,12 +31,12 @@ class Settings:
 
     def initialize_dynamic_settings(self):
         """ Initialize settings that change throughout the game. """
-        self.ship_speed = 1.5
-        self.bullet_speed = 3.0
-        self.alien_speed = 1.0
+        self.ship_speed = 5.5
+        self.bullet_speed = 8.0
+        self.alien_speed = 2.0
 
         # fleet_direction of 1 represents right; -1 represents left.
-        self.fleet_direction = 1
+        self.fleet_direction = 2
 
         # Scoring
         self.alien_points = 50
