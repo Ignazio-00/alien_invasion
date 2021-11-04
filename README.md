@@ -2,6 +2,8 @@
 Space Invaders–style shooting 2D game, which consists of levels of increasing difficulty.
 
 
+## Base code from the original Alien Invasion game: https://github.com/majdukovic/alien_invasion
+
 ## Game description
 
 > In Alien Invasion, the player controls a rocket ship that appears
