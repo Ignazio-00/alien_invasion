@@ -18,14 +18,14 @@ class Alien(Sprite):
         randint_random = randint(0, 100)
         if randint_random <= 20:
             self.alien_health = 3
-        elif randint_random >= 21 and randint_random <= 50:
+        elif randint_random >= 21 and randint_random <= 51:
             self.alien_health = 2
 
+        # Load the alien image and set its rect attribute IB
         self.update_image()
         self.rect = self.image.get_rect()
-        # Load the alien image and set its rect attribute IB
 
-        # Start each new alien near the top left of the screen
+        # Start each new alien near the top left of the screen 
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
 
@@ -36,7 +36,7 @@ class Alien(Sprite):
         # Update image dependend on health IB
     
     def update_image(self):
-        '''Update image dependend on health'''
+        '''Update image dependent on health'''
         if self.alien_health == 1:
             self.image = pygame.image.load("images/assets/pixel_ship_green_small.png")
         elif self.alien_health == 2:
@@ -44,14 +44,16 @@ class Alien(Sprite):
         elif self.alien_health == 3:
             self.image = pygame.image.load("images/assets/pixel_ship_red_small.png")
 
-
+    # IB
     def update(self):
         """Move alien right or left."""
-        self.x += (self.settings.alien_speed * self.settings.fleet_direction)
-        self.rect.x = self.x
-
-    def check_edges(self):
-        """Return True if alien is at the edge of the screen."""
-        screen_rect = self.screen.get_rect()
-        if self.rect.right >= screen_rect.right or self.rect.left <= 0:
-            return True
+        # self.x += (self.settings.alien_speed * self.settings.fleet_direction)
+        # self.rect.x = self.x
+        self.rect.y += self.settings.fleet_drop_speed
+        
+    # No use because no check needed for edges IB
+    #def check_edges(self):
+        #"""Return True if alien is at the edge of the screen."""
+        #screen_rect = self.screen.get_rect()
+        #if self.rect.right >= screen_rect.right or self.rect.left <= 0:
+            #return True

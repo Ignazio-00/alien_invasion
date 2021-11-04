@@ -1,5 +1,6 @@
 import sys
 from time import sleep
+from random import randint
 
 import pygame
 
@@ -10,6 +11,7 @@ from settings import Settings
 from ship import Ship
 from button import Button
 from scoreboard import Scoreboard
+
 
 
 class AlienInvasion:
@@ -39,10 +41,11 @@ class AlienInvasion:
         self._create_fleet()
 
         # Make the Play button. IB
-        self.play_button = Button(self, "Play")
+        self.play_button = Button(self, "'PRESS' to start the game")
 
     def run_game(self):
         """Start the main loop for the game."""
+        # Every game has a While True loop to keep it updated
         while True:
             self._check_events()
             if self.stats.game_active:
@@ -103,18 +106,22 @@ class AlienInvasion:
         available_space_y = (self.settings.screen_height - (3 * alien_height) - ship_height)
         number_rows = available_space_y // (2 * alien_height)
 
-        # Create the full fleet of aliens.
+        # Create the full fleet of aliens. IB
+        # print(number_rows * number_aliens_x)
         for row_number in range(number_rows):
             for alien_number in range(number_aliens_x):
-                self._create_alien(alien_number, row_number)
+                if randint(0, 100) <= self.settings.spawn_chance:
+                    self._create_alien(alien_number, row_number)
 
+    # Alien placement on X IB
     def _create_alien(self, alien_number, row_number):
         """Create an alien and place it in the row."""
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
         alien.x = alien_width + 2 * alien_width * alien_number
         alien.rect.x = alien.x
-        alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
+        # Reposition Alien spawn above the screen IB
+        alien.rect.y = alien_height + 4 * alien_height * row_number - self.settings.screen_height
         self.aliens.add(alien)
 
     def _update_screen(self):
@@ -195,10 +202,10 @@ class AlienInvasion:
             # Increase level
             self.stats.level += 1
             self.sb.prep_level()
-
     def _update_aliens(self):
         """Check if the fleet is at and edge, then update the positions of all aliens in the fleet."""
-        self._check_fleet_edges()
+        # No use of checking edges IB
+        # self._check_fleet_edges()
         self.aliens.update()
 
         # Look for alien-ship collisions.
@@ -207,19 +214,19 @@ class AlienInvasion:
 
         # look for aliens hitting the bottom of the screen.
         self._check_aliens_bottom()
-
-    def _check_fleet_edges(self):
-        """Respond appropriately if any aliens have reached an edge."""
-        for alien in self.aliens.sprites():
-            if alien.check_edges():
-                self._change_fleet_direction()
-                break
-
-    def _change_fleet_direction(self):
-        """Drop the entire fleet and change the fleet's direction"""
-        for alien in self.aliens.sprites():
-            alien.rect.y += self.settings.fleet_drop_speed
-        self.settings.fleet_direction *= -1
+    # No use because no change in X IB
+    #def _check_fleet_edges(self):
+        #"""Respond appropriately if any aliens have reached an edge."""
+        #for alien in self.aliens.sprites():
+            #if alien.check_edges():
+                #self._change_fleet_direction()
+                #break
+    # No use because no change in X IB
+    #def _change_fleet_direction(self):
+        #"""Drop the entire fleet and change the fleet's direction"""
+        # for alien in self.aliens.sprites():
+          #  alien.rect.y += self.settings.fleet_drop_speed
+        # self.settings.fleet_direction *= -1
 
     def _ship_hit(self):
         """Respond to the ship being hit by an alien."""

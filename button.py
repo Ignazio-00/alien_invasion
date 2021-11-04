@@ -8,11 +8,11 @@ class Button:
         self.screen = ai_game.screen
         self.screen_rect = self.screen.get_rect()
 
-        # Set the dimensions and properties of the button.
-        self.width, self.height = 350, 100
-        self.button_color = (0, 255, 0)
-        self.text_color = (255, 255, 255)
-        self.font = pygame.ftfont.Font("images/assets/pricedown.otf", 68)
+        # Set the dimensions and properties of the button. IB
+        self.width, self.height = 800, 100
+        self.button_color = (230, 230, 230)
+        self.text_color = (0, 0, 0)
+        self.font = pygame.ftfont.Font("images/assets/pricedown.otf", 70)
 
         # Build the button's rect object and center it.
         self.rect = pygame.Rect(0, 0, self.width, self.height)
